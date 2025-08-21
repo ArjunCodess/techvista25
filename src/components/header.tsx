@@ -9,6 +9,11 @@ export default function Header() {
     <header className="w-full border-b">
       <div className="mx-auto max-w-5xl h-15 px-4 flex items-center justify-between">
         <Link href="/" className="font-semibold text-2xl">Connecto</Link>
+        <div className="flex-1 flex justify-center">
+          <Link href="/feed" className="text-base hover:underline">
+            Feed
+          </Link>
+        </div>
         <nav className="flex items-center gap-3">
           <SignedOut>
             <Link href="/sign-in">

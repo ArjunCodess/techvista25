@@ -41,20 +41,13 @@ Keep it brutally lean. These features give **immediate value** and can be delive
 * Display as feed cards with timestamps.
 * MVP: Read-only, no posting from students (admins only).
 
-### **4.2 Interactive Map (Static V1)**
-
-* Embed a **clickable campus map image**.
-* Hover/click → modal showing room/area info.
-* Tag certain areas with **event labels** (pulled from CMS).
-* MVP: Not a live map, just clickable hotspots.
-
-### **4.3 Polls**
+### **4.2 Polls**
 
 * Admins can create a poll (question + options).
 * Students can vote once per poll (session-based auth, no login needed in v1).
 * Poll results displayed instantly as percentages.
 
-### **4.4 Lost & Found (Listings)**
+### **4.3 Lost & Found (Listings)**
 
 * Students can post simple entries: “Lost” or “Found” + item + description + contact.
 * Posts displayed in a feed, filterable by category.
@@ -62,28 +55,12 @@ Keep it brutally lean. These features give **immediate value** and can be delive
 
 ---
 
-## **5. V2 (Stretch – Not in 24h, but Next in Line)**
-
-If time allows or for post-hackathon iteration:
-
-* **Peer Support Q\&A / Chat** (needs moderation → can wait).
-* **Push Notifications / Email Alerts** (reminders for events, deadlines).
-* **Image upload for Lost & Found.**
-* **Live event highlights on map** (requires integration, so later).
-
----
-
 ## **6. User Flow (Example)**
 
 1. Student lands on homepage.
-
    * Sees “Notice Board” feed.
-2. Clicks “Map.”
-
-   * Sees campus layout. “Sports Day – Main Field” highlighted.
-3. Scrolls down → poll widget → votes for farewell theme.
-4. Switches to “Lost & Found.”
-
+2. Scrolls down → poll widget → votes for farewell theme.
+3. Switches to “Lost & Found.”
    * Spots a listing: “Lost – Blue Water Bottle.”
 
 ---
@@ -91,7 +68,7 @@ If time allows or for post-hackathon iteration:
 ## **7. Architecture & Stack**
 
 * **Frontend:** Next.js + TypeScript + shadcn/ui
-* **CMS:** Sanity (stores notices, polls, lost/found posts, event tags for map)
+* **CMS:** Sanity (stores notices, polls, lost/found posts)
 * **Database:** Sanity (no separate DB needed for V1)
 * **Auth:** Skip for v1 → allow anonymous voting + posting (basic input validation).
 
@@ -101,7 +78,7 @@ If time allows or for post-hackathon iteration:
 
 * **Clean, card-based design** (feed style).
 * **Mobile-first layouts.**
-* **Navigation Tabs:** Home (Notices), Map, Polls, Lost & Found.
+* **Navigation Tabs:** Home (Notices), Polls, Lost & Found.
 * **Colors:** School/college theme (customizable via config).
 * **Tone:** Friendly but functional.
 
@@ -126,9 +103,8 @@ If time allows or for post-hackathon iteration:
 ## **11. Brutal Priority (24h Shipping Order)**
 
 1. **Notice Board (CMS-powered)** – non-negotiable, gives instant value.
-2. **Static Interactive Map** – lightweight, wow factor.
-3. **Polls (CMS-driven)** – fun, engages students.
-4. **Lost & Found Feed** – easy to build, practical.
+2. **Polls (CMS-driven)** – fun, engages students.
+3. **Lost & Found Feed** – easy to build, practical.
 
 ---
 
@@ -137,6 +113,5 @@ If time allows or for post-hackathon iteration:
 A functional web app where a student can:
 
 * Read latest notices.
-* See campus map + tagged events.
 * Vote in polls.
 * Post/read lost & found.
