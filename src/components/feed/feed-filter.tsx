@@ -14,6 +14,7 @@ const OPTIONS = [
   { value: "all", label: "All" },
   { value: "posts", label: "Posts" },
   { value: "polls", label: "Polls" },
+  { value: "feedback", label: "Feedback" },
   { value: "lostandfound", label: "Lost & Found" },
 ]
 
