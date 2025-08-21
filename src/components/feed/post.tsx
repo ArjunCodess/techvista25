@@ -35,7 +35,7 @@ export default function Post({ item }: { item: PostItem }) {
     <Card className="gap-2">
       <CardContent>
         {item.content && (
-          <p className="whitespace-pre-wrap mb-3">{item.content}</p>
+          <p className="whitespace-pre-wrap mb-4">{item.content}</p>
         )}
 
         {images.length > 0 && (
@@ -78,7 +78,7 @@ export default function Post({ item }: { item: PostItem }) {
         )}
 
         {files.length > 0 && (
-          <div className="grid grid-cols-1 gap-2 mb-2">
+          <div className="grid grid-cols-1 gap-2 mb-4">
             {files.map((f) => (
               <Button
                 key={f._key}
