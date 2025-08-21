@@ -1,23 +1,30 @@
 import { LostAndFoundItem } from "@/sanity/lib/queries";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export default function LostAndFound({ item }: { item: LostAndFoundItem }) {
   return (
-    <article className="rounded-lg border bg-card text-card-foreground p-4">
-      <div className="flex items-center justify-between">
-        <h3 className="font-medium">{item.lost || "Lost item"}</h3>
-        {item.found ? (
-          <span className="text-xs rounded bg-green-100 text-green-800 px-2 py-0.5">
-            Found
-          </span>
-        ) : (
-          <span className="text-xs rounded bg-yellow-100 text-yellow-800 px-2 py-0.5">
-            Missing
-          </span>
-        )}
-      </div>
-      {item.content ? (
-        <p className="mt-1 text-sm text-muted-foreground">{item.content}</p>
-      ) : null}
-    </article>
+    <Card>
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <h3 className="font-medium">{item.lost || "Lost item"}</h3>
+          <Badge
+            variant={item.found ? "default" : "secondary"}
+            className={
+              item.found
+                ? "bg-green-100 text-green-800 hover:bg-green-100"
+                : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"
+            }
+          >
+            {item.found ? "Found" : "Missing"}
+          </Badge>
+        </div>
+      </CardHeader>
+      {item.content && (
+        <CardContent className="pt-0">
+          <p className="text-sm text-muted-foreground">{item.content}</p>
+        </CardContent>
+      )}
+    </Card>
   );
 }
