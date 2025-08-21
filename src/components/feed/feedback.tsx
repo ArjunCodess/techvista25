@@ -6,6 +6,7 @@ import { useUser } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { formatDateTime } from "@/lib/utils";
+import { Badge } from "../ui/badge";
 import type { FeedbackItem } from "@/sanity/lib/queries";
 
 export default function Feedback({ item }: { item: FeedbackItem }) {
@@ -91,6 +92,23 @@ export default function Feedback({ item }: { item: FeedbackItem }) {
             {item.description}
           </p>
         )}
+        <div className="flex flex-wrap gap-2 w-full mb-3">
+          {item.sections?.map((section, idx) => (
+            <Badge key={`feedback-section-${idx}`} variant="section" className="text-xs whitespace-nowrap">
+              {section}
+            </Badge>
+          ))}
+          {item.classes?.map((klass, idx) => (
+            <Badge key={`feedback-class-${idx}`} variant="classes" className="text-xs whitespace-nowrap">
+              {klass}
+            </Badge>
+          ))}
+          {item.tags?.map((tag, idx) => (
+            <Badge key={`feedback-tag-${idx}`} variant="tags" className="text-xs whitespace-nowrap">
+              #{tag}
+            </Badge>
+          ))}
+        </div>
         {hasSubmitted ? (
           <div className="py-2 flex items-center justify-center">
             <span className="text-sm font-medium">Submitted</span>

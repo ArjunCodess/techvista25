@@ -2,6 +2,7 @@
 
 import type { PollItem } from "@/sanity/lib/queries";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { formatDateTime } from "@/lib/utils";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useUser } from "@clerk/nextjs";
@@ -107,6 +108,23 @@ export default function Poll({ item }: { item: PollItem }) {
             {item.description}
           </p>
         )}
+        <div className="flex flex-wrap gap-2 w-full mb-3">
+          {item.sections?.map((section, idx) => (
+            <Badge key={`poll-section-${idx}`} variant="section" className="text-xs whitespace-nowrap">
+              {section}
+            </Badge>
+          ))}
+          {item.classes?.map((klass, idx) => (
+            <Badge key={`poll-class-${idx}`} variant="classes" className="text-xs whitespace-nowrap">
+              {klass}
+            </Badge>
+          ))}
+          {item.tags?.map((tag, idx) => (
+            <Badge key={`poll-tag-${idx}`} variant="tags" className="text-xs whitespace-nowrap">
+              #{tag}
+            </Badge>
+          ))}
+        </div>
         {options.length > 0 && (
           <div className="space-y-2">
             {options.map((o, idx) => {

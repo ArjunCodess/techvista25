@@ -43,6 +43,9 @@ export type LostAndFoundItem = {
   found?: boolean;
   createdAt?: string;
   updatedAt?: string;
+  tags?: string[];
+  sections?: string[];
+  classes?: string[];
 };
 
 export type PollOption = { content: string; votes?: number };
@@ -53,6 +56,9 @@ export type PollItem = {
   options?: PollOption[];
   createdAt: string;
   updatedAt?: string;
+  tags?: string[];
+  sections?: string[];
+  classes?: string[];
 };
 
 export type FeedbackEntry = { content: string; userId?: string; createdAt?: string };
@@ -63,6 +69,9 @@ export type FeedbackItem = {
   entries?: FeedbackEntry[];
   createdAt: string;
   updatedAt?: string;
+  tags?: string[];
+  sections?: string[];
+  classes?: string[];
 };
 
 export const POSTS_QUERY = groq`*[_type == "post"] | order(coalesce(updatedAt, createdAt, _createdAt) desc) {
@@ -92,7 +101,10 @@ export const LOST_AND_FOUND_QUERY = groq`*[_type == "lostAndFound"] | order(coal
   content,
   found,
   createdAt,
-  updatedAt
+  updatedAt,
+  tags,
+  sections,
+  classes
 }`;
 
 export const POLLS_QUERY = groq`*[_type == "poll"] | order(coalesce(updatedAt, createdAt, _createdAt) desc) {
@@ -101,7 +113,10 @@ export const POLLS_QUERY = groq`*[_type == "poll"] | order(coalesce(updatedAt, c
   description,
   options[]{content, votes},
   createdAt,
-  updatedAt
+  updatedAt,
+  tags,
+  sections,
+  classes
 }`;
 
 export const FEEDBACKS_QUERY = groq`*[_type == "feedback"] | order(coalesce(updatedAt, createdAt, _createdAt) desc) {
@@ -110,7 +125,10 @@ export const FEEDBACKS_QUERY = groq`*[_type == "feedback"] | order(coalesce(upda
   description,
   entries[]{ content, userId, createdAt },
   createdAt,
-  updatedAt
+  updatedAt,
+  tags,
+  sections,
+  classes
 }`;
 
 export async function fetchPosts() {

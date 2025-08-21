@@ -31,6 +31,25 @@ export default function LostAndFound({ item }: { item: LostAndFoundItem }) {
           <p className="text-sm text-muted-foreground">{item.content}</p>
         </CardContent>
       )}
+      <div className="px-6 pb-3 pt-1">
+        <div className="flex flex-wrap gap-2 w-full">
+          {item.sections?.map((section, idx) => (
+            <Badge key={`laf-section-${idx}`} variant="section" className="text-xs whitespace-nowrap">
+              {section}
+            </Badge>
+          ))}
+          {item.classes?.map((klass, idx) => (
+            <Badge key={`laf-class-${idx}`} variant="classes" className="text-xs whitespace-nowrap">
+              {klass}
+            </Badge>
+          ))}
+          {item.tags?.map((tag, idx) => (
+            <Badge key={`laf-tag-${idx}`} variant="tags" className="text-xs whitespace-nowrap">
+              #{tag}
+            </Badge>
+          ))}
+        </div>
+      </div>
     </Card>
   );
 }
