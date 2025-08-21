@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/header";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,9 +13,11 @@ export default function FrontendLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section>
-      <Header />
-      <div className="mx-auto max-w-5xl w-full">{children}</div>
-    </section>
+    <ClerkProvider>
+      <section>
+        <Header />
+        <div className="mx-auto max-w-5xl w-full">{children}</div>
+      </section>
+    </ClerkProvider>
   );
 }
