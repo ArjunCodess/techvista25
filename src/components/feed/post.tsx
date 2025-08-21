@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/carousel";
 
 function isImageMedia(m: ImageMedia | FileMedia): m is ImageMedia {
-  return m._type === "image" && !!m.asset?.url
+  return m._type === "image" && !!m.asset?.url;
 }
 
 function isFileMedia(m: ImageMedia | FileMedia): m is FileMedia {
-  return m._type === "file" && !!m.asset?.url
+  return m._type === "file" && !!m.asset?.url;
 }
 
 export default function Post({ item }: { item: PostItem }) {
@@ -25,10 +25,11 @@ export default function Post({ item }: { item: PostItem }) {
   const images = media.filter(isImageMedia);
   const files = media.filter(isFileMedia);
   const firstDims = images[0]?.asset?.metadata?.dimensions;
-  const aspectRatio = firstDims?.width && firstDims?.height
-    ? firstDims.width / firstDims.height
-    : 4 / 3;
-    
+  const aspectRatio =
+    firstDims?.width && firstDims?.height
+      ? firstDims.width / firstDims.height
+      : 4 / 3;
+
   return (
     <Card className="gap-2">
       {item.organisationTitle && (
@@ -106,35 +107,37 @@ export default function Post({ item }: { item: PostItem }) {
           </div>
         )}
 
-        {item.sections?.length ? (
-          <div className="flex flex-wrap gap-1 mb-2">
-            {item.sections.map((section, idx) => (
-              <Badge key={idx} variant="outline" className="text-xs">
-                {section}
-              </Badge>
-            ))}
-          </div>
-        ) : null}
+        <div className="flex flex-row gap-1">
+          {item.sections?.length ? (
+            <div className="flex flex-wrap gap-1">
+              {item.sections.map((section, idx) => (
+                <Badge key={idx} variant="section" className="text-xs">
+                  {section} Section
+                </Badge>
+              ))}
+            </div>
+          ) : null}
 
-        {item.classes?.length ? (
-          <div className="flex flex-wrap gap-1 mb-2">
-            {item.classes.map((klass, idx) => (
-              <Badge key={idx} variant="secondary" className="text-xs">
-                {klass}
-              </Badge>
-            ))}
-          </div>
-        ) : null}
+          {item.classes?.length ? (
+            <div className="flex flex-wrap gap-1">
+              {item.classes.map((klass, idx) => (
+                <Badge key={idx} variant="classes" className="text-xs">
+                  {klass}
+                </Badge>
+              ))}
+            </div>
+          ) : null}
 
-        {item.tags?.length && (
-          <div className="flex flex-wrap gap-1">
-            {item.tags.map((tag, idx) => (
-              <Badge key={idx} variant="secondary" className="text-xs">
-                #{tag}
-              </Badge>
-            ))}
-          </div>
-        )}
+          {item.tags?.length && (
+            <div className="flex flex-wrap gap-1">
+              {item.tags.map((tag, idx) => (
+                <Badge key={idx} variant="tags" className="text-xs">
+                  #{tag}
+                </Badge>
+              ))}
+            </div>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
