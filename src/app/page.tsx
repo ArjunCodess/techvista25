@@ -77,10 +77,10 @@ export default function HomePage() {
       <section className="px-4 py-16 bg-white">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl font-bold text-neutral-900 mb-4">
               Everything You Need, All in One Place
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto text-balance">
+            <p className="text-lg text-neutral-600 max-w-2xl mx-auto text-balance">
               Three powerful features designed to make your campus life easier
               and more engaging.
             </p>
@@ -100,7 +100,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3 text-sm text-gray-600">
+                <div className="space-y-3 text-sm text-neutral-600">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-blue-500" />
                     <span>Events & Announcements</span>
@@ -129,7 +129,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3 text-sm text-gray-600">
+                <div className="space-y-3 text-sm text-neutral-600">
                   <div className="flex items-center gap-2">
                     <MessageSquare className="w-4 h-4 text-green-500" />
                     <span>Quick Voting</span>
@@ -158,7 +158,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3 text-sm text-gray-600">
+                <div className="space-y-3 text-sm text-neutral-600">
                   <div className="flex items-center gap-2">
                     <Search className="w-4 h-4 text-yellow-500" />
                     <span>Easy Posting</span>
@@ -179,13 +179,13 @@ export default function HomePage() {
       </section>
 
       {/* Sample Content Preview */}
-      <section className="px-4 py-24 bg-gray-50">
+      <section className="px-4 py-24 bg-neutral-50">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl font-bold text-neutral-900 mb-4">
               See It in Action
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-neutral-600">
               Here's what you'll find on your campus companion
             </p>
           </div>
@@ -233,7 +233,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="px-4 py-8 bg-gray-900 text-gray-400">
+      <footer className="px-4 py-8 bg-neutral-900 text-neutral-400">
         <div className="mx-auto max-w-6xl text-center">
           <p className="text-sm">
             © 2025 Campus Companion. Built with ❤️ for students, by students.

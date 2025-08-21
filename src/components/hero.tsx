@@ -80,10 +80,10 @@ export default function Hero() {
               <currentFeature.icon className="w-6 h-6 text-blue-600" />
             </div>
             <div className="text-left">
-              <h3 className="font-semibold text-gray-900">
+              <h3 className="font-semibold text-neutral-900">
                 {currentFeature.title}
               </h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-neutral-600">
                 {currentFeature.description}
               </p>
             </div>
