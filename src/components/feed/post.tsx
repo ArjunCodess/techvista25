@@ -101,36 +101,40 @@ export default function Post({ item }: { item: PostItem }) {
           </div>
         )}
 
-        <div className="flex flex-row gap-1">
-          {item.sections?.length ? (
-            <div className="flex flex-wrap gap-1">
-              {item.sections.map((section, idx) => (
-                <Badge key={idx} variant="section" className="text-xs">
+        <div className="flex flex-wrap gap-2 w-full">
+          {item.sections?.length
+            ? item.sections.map((section, idx) => (
+                <Badge
+                  key={`section-${idx}`}
+                  variant="section"
+                  className="text-xs whitespace-nowrap"
+                >
                   {toTitleCase(section)} Section
                 </Badge>
-              ))}
-            </div>
-          ) : null}
-
-          {item.classes?.length ? (
-            <div className="flex flex-wrap gap-1">
-              {item.classes.map((klass, idx) => (
-                <Badge key={idx} variant="classes" className="text-xs">
+              ))
+            : null}
+          {item.classes?.length
+            ? item.classes.map((klass, idx) => (
+                <Badge
+                  key={`class-${idx}`}
+                  variant="classes"
+                  className="text-xs whitespace-nowrap"
+                >
                   {toTitleCase(klass)}
                 </Badge>
-              ))}
-            </div>
-          ) : null}
-
-          {item.tags?.length && (
-            <div className="flex flex-wrap gap-1">
-              {item.tags.map((tag, idx) => (
-                <Badge key={idx} variant="tags" className="text-xs">
+              ))
+            : null}
+          {item.tags?.length
+            ? item.tags.map((tag, idx) => (
+                <Badge
+                  key={`tag-${idx}`}
+                  variant="tags"
+                  className="text-xs whitespace-nowrap"
+                >
                   #{toTitleCase(tag)}
                 </Badge>
-              ))}
-            </div>
-          )}
+              ))
+            : null}
         </div>
       </CardContent>
     </Card>

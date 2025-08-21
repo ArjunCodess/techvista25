@@ -17,7 +17,7 @@ export default function FrontendLayout({
     <ClerkProvider>
       <section>
         <Header />
-        <div className="mx-auto max-w-2xl w-full">
+        <div className="mx-auto max-w-2xl px-4 w-full">
           {children}
           <SanityLive />
         </div>
