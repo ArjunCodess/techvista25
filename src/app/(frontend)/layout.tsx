@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
+import { SanityLive } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +17,10 @@ export default function FrontendLayout({
     <ClerkProvider>
       <section>
         <Header />
-        <div className="mx-auto max-w-5xl w-full">{children}</div>
+        <div className="mx-auto max-w-2xl w-full">
+          {children}
+          <SanityLive />
+        </div>
       </section>
     </ClerkProvider>
   );
