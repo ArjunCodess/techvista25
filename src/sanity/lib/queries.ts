@@ -45,7 +45,7 @@ export type LostAndFoundItem = {
   updatedAt?: string;
 };
 
-export type PollOption = { content: string };
+export type PollOption = { content: string; votes?: number };
 export type PollItem = {
   _id: string;
   title?: string;
@@ -88,7 +88,7 @@ export const POLLS_QUERY = groq`*[_type == "poll"] | order(_createdAt desc) {
   _id,
   title,
   description,
-  options[]{content},
+  options[]{content, votes},
   "createdAt": _createdAt
 }`;
 

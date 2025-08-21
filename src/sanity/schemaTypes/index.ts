@@ -149,9 +149,23 @@ const poll: SchemaTypeDefinition = {
               type: 'string',
               validation: (Rule) => Rule.required(),
             },
+            {
+              name: 'votes',
+              title: 'Votes',
+              type: 'number',
+              initialValue: 0,
+            },
           ],
         },
       ],
+    },
+    {
+      name: 'voters',
+      title: 'Voters (user ids that already voted)',
+      type: 'array',
+      of: [{ type: 'string' }],
+      readOnly: true,
+      description: 'used to ensure one vote per poll per user',
     },
   ],
 }
