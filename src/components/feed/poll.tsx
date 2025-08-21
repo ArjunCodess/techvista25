@@ -4,7 +4,7 @@ import type { PollItem } from "@/sanity/lib/queries";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatDateTime, toTitleCase } from "@/lib/utils";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 
 export default function Poll({ item }: { item: PollItem }) {
   const [options, setOptions] = useState(
@@ -17,18 +17,12 @@ export default function Poll({ item }: { item: PollItem }) {
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
   const cooldownTimerRef = useRef<number | null>(null);
 
-  const storageVoteKey = useMemo(() => `poll_voted_${item._id}`, [item._id]);
-
   useEffect(() => {
-    try {
-      const voted = localStorage.getItem(storageVoteKey) === "1";
-      setHasVoted(voted);
-    } catch {}
     return () => {
       if (cooldownTimerRef.current)
         window.clearInterval(cooldownTimerRef.current);
     };
-  }, [storageVoteKey]);
+  }, []);
 
   const totalVotes = useMemo(
     () =>
@@ -73,9 +67,6 @@ export default function Poll({ item }: { item: PollItem }) {
             updated.map((o) => ({ content: o.content, votes: o.votes ?? 0 }))
           );
         setHasVoted(true);
-        try {
-          localStorage.setItem(storageVoteKey, "1");
-        } catch {}
       }
     } finally {
       setIsSubmitting(false);

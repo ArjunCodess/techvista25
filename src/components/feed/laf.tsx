@@ -116,11 +116,7 @@ export default function LostAndFound({
                   setIsSubmitting(false);
                 }
               }}
-              className={
-                isSubmitting
-                  ? "opacity-75 cursor-not-allowed"
-                  : "hover:bg-muted"
-              }
+              className={isSubmitting ? "opacity-75 cursor-not-allowed" : ""}
             >
               Add Contact Number
             </Button>

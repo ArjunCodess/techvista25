@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useMemo, useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
@@ -16,21 +16,14 @@ export default function Feedback({ item }: { item: FeedbackItem }) {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const cooldownTimerRef = useRef<number | null>(null);
 
-  const storageKey = useMemo(
-    () => `feedback_submitted_${item._id}`,
-    [item._id]
-  );
   const { isSignedIn } = useUser();
 
   useEffect(() => {
-    try {
-      setHasSubmitted(localStorage.getItem(storageKey) === "1");
-    } catch {}
     return () => {
       if (cooldownTimerRef.current)
         window.clearInterval(cooldownTimerRef.current);
     };
-  }, [storageKey]);
+  }, []);
 
   function startCooldown(seconds: number) {
     const until = Date.now() + seconds * 1000;
@@ -60,9 +53,6 @@ export default function Feedback({ item }: { item: FeedbackItem }) {
       if (res.ok) {
         setHasSubmitted(true);
         setText("");
-        try {
-          localStorage.setItem(storageKey, "1");
-        } catch {}
       }
     } finally {
       setSubmitting(false);
@@ -131,7 +121,7 @@ export default function Feedback({ item }: { item: FeedbackItem }) {
                 className={`border rounded-md px-3 py-1.5 text-sm ${
                   isDisabled || !text.trim()
                     ? "cursor-not-allowed opacity-80"
-                    : "hover:bg-muted"
+                    : ""
                 }`}
               >
                 Submit
