@@ -13,6 +13,23 @@ export function toTitleCase(input: string): string {
     .replace(/\b\w/g, (char) => char.toUpperCase())
 }
 
+export function formatDateTime(input?: string): string {
+  if (!input) return ""
+  const date = new Date(input)
+  if (Number.isNaN(date.getTime())) return input
+  try {
+    return date.toLocaleString(undefined, {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+  } catch {
+    return date.toISOString()
+  }
+}
+
 export type UnifiedFeedItem =
   | { kind: "post"; date: string; item: PostItem }
   | { kind: "poll"; date: string; item: PollItem }

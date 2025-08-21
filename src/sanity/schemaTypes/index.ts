@@ -125,6 +125,20 @@ const poll: SchemaTypeDefinition = {
   type: 'document',
   fields: [
     {
+      name: 'createdAt',
+      title: 'Created At',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+      initialValue: () => new Date().toISOString(),
+    },
+    {
+      name: 'updatedAt',
+      title: 'Updated At',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+      initialValue: () => new Date().toISOString(),
+    },
+    {
       name: 'title',
       title: 'Title',
       type: 'string',
@@ -175,6 +189,20 @@ const feedback: SchemaTypeDefinition = {
   title: 'Feedback',
   type: 'document',
   fields: [
+    {
+      name: 'createdAt',
+      title: 'Created At',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+      initialValue: () => new Date().toISOString(),
+    },
+    {
+      name: 'updatedAt',
+      title: 'Updated At',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+      initialValue: () => new Date().toISOString(),
+    },
     { name: 'title', title: 'Title', type: 'string' },
     { name: 'description', title: 'Description', type: 'text' },
     {

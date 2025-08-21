@@ -52,6 +52,7 @@ export type PollItem = {
   description?: string;
   options?: PollOption[];
   createdAt: string;
+  updatedAt?: string;
 };
 
 export type FeedbackEntry = { content: string; userId?: string; createdAt?: string };
@@ -61,6 +62,7 @@ export type FeedbackItem = {
   description?: string;
   entries?: FeedbackEntry[];
   createdAt: string;
+  updatedAt?: string;
 };
 
 export const POSTS_QUERY = groq`*[_type == "post"] | order(coalesce(updatedAt, createdAt, _createdAt) desc) {
@@ -93,20 +95,22 @@ export const LOST_AND_FOUND_QUERY = groq`*[_type == "lostAndFound"] | order(coal
   updatedAt
 }`;
 
-export const POLLS_QUERY = groq`*[_type == "poll"] | order(_createdAt desc) {
+export const POLLS_QUERY = groq`*[_type == "poll"] | order(coalesce(updatedAt, createdAt, _createdAt) desc) {
   _id,
   title,
   description,
   options[]{content, votes},
-  "createdAt": _createdAt
+  createdAt,
+  updatedAt
 }`;
 
-export const FEEDBACKS_QUERY = groq`*[_type == "feedback"] | order(_createdAt desc) {
+export const FEEDBACKS_QUERY = groq`*[_type == "feedback"] | order(coalesce(updatedAt, createdAt, _createdAt) desc) {
   _id,
   title,
   description,
   entries[]{ content, userId, createdAt },
-  "createdAt": _createdAt
+  createdAt,
+  updatedAt
 }`;
 
 export async function fetchPosts() {
