@@ -2,7 +2,7 @@
 
 **Project Name:** A Campus Companion
 **Platform:** Web-first (mobile responsive)
-**Tech Stack:** Next.js 14, TypeScript, shadcn/ui, Sanity CMS
+**Tech Stack:** Next.js 15, TypeScript, shadcn/ui, Sanity CMS
 
 ---
 
