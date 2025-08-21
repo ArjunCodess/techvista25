@@ -35,7 +35,7 @@ export default function Post({ item }: { item: PostItem }) {
   return (
     <Card className="gap-2">
       <CardContent>
-        <div className="text-xs text-muted-foreground mb-2">{formatDateTime(item.updatedAt || item.createdAt)}</div>
+        <div className="text-xs text-muted-foreground mb-2">{formatDateTime(item.createdAt)}</div>
         {item.content && (
           <p className="whitespace-pre-wrap mb-4">{item.content}</p>
         )}

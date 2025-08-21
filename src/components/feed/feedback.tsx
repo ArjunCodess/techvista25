@@ -73,15 +73,19 @@ export default function Feedback({ item }: { item: FeedbackItem }) {
 
   return (
     <Card className="gap-2">
-      {item.title && (
-        <CardHeader>
-          <CardTitle className="text-base font-medium">
-            <span className="font-bold">Feedback</span>: {item.title}
-          </CardTitle>
-        </CardHeader>
-      )}
+      <CardHeader>
+        <div className="flex items-start justify-between">
+          <div>
+            {item.title && (
+              <CardTitle className="text-base font-medium">
+                <span className="font-bold">Feedback</span>: {item.title}
+              </CardTitle>
+            )}
+          </div>
+          <div className="text-xs text-muted-foreground">{formatDateTime(item.createdAt)}</div>
+        </div>
+      </CardHeader>
       <CardContent className={item.title ? "pt-0" : ""}>
-        <div className="text-xs text-muted-foreground mb-2">{formatDateTime(item.updatedAt || item.createdAt)}</div>
         {item.description && (
           <p className="text-sm text-muted-foreground mb-3">
             {item.description}
