@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Header from "@/components/header";
-import { ClerkProvider } from "@clerk/nextjs";
 import { SanityLive } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
@@ -14,14 +13,12 @@ export default function FrontendLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <section>
-        <Header />
-        <div className="mx-auto max-w-2xl px-4 w-full">
-          {children}
-          <SanityLive />
-        </div>
-      </section>
-    </ClerkProvider>
+    <section>
+      <Header />
+      <div className="mx-auto max-w-2xl px-4 w-full">
+        {children}
+        <SanityLive />
+      </div>
+    </section>
   );
 }

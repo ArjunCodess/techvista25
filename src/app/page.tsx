@@ -21,6 +21,7 @@ import Hero from "@/components/hero";
 import Post from "@/components/feed/post";
 import Poll from "@/components/feed/poll";
 import LostAndFound from "@/components/feed/laf";
+import Header from "@/components/header";
 
 const samplePost = {
   _id: "sample-post",
@@ -66,6 +67,9 @@ const sampleLaf = {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      {/* Header */}
+      <Header />
+
       {/* Hero Section */}
       <Hero />
 
