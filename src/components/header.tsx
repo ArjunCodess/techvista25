@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header className="w-full border-b">
       <div className="mx-auto max-w-5xl h-15 px-4 flex items-center justify-between">
-        <div className="font-semibold">&nbsp;</div>
+        <Link href="/" className="font-semibold text-2xl">Connecto</Link>
         <nav className="flex items-center gap-3">
           <SignedOut>
             <Link href="/sign-in">
