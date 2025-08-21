@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatDateTime, toTitleCase } from "@/lib/utils";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useUser } from "@clerk/nextjs";
 
 export default function Poll({ item }: { item: PollItem }) {
   const [options, setOptions] = useState(
@@ -19,7 +18,6 @@ export default function Poll({ item }: { item: PollItem }) {
   const cooldownTimerRef = useRef<number | null>(null);
 
   const storageVoteKey = useMemo(() => `poll_voted_${item._id}`, [item._id]);
-  const { isSignedIn } = useUser();
 
   useEffect(() => {
     try {
@@ -56,7 +54,6 @@ export default function Poll({ item }: { item: PollItem }) {
   }
 
   async function handleVote(optionIndex: number) {
-    if (!isSignedIn) return;
     if (hasVoted || isSubmitting || cooldownUntil) return;
     setIsSubmitting(true);
     startCooldown(5);
@@ -86,7 +83,7 @@ export default function Poll({ item }: { item: PollItem }) {
   }
 
   const isDisabled =
-    !isSignedIn || isSubmitting || Boolean(cooldownUntil) || hasVoted;
+    isSubmitting || Boolean(cooldownUntil) || hasVoted;
 
   return (
     <Card className="gap-2">
