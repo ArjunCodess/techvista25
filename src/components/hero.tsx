@@ -45,7 +45,7 @@ export default function Hero() {
   const currentFeature = features[featureNumber];
 
   return (
-    <div className="w-full">
+    <div className="w-full px-4">
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <Button variant="secondary" size="sm">
@@ -56,7 +56,7 @@ export default function Hero() {
               <span className="text-blue-600 text-6xl md:text-8xl">
                 Campusly
               </span>
-              <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
+              <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-5 pt-3 text-balance">
                 Your Digital Campus Companion
               </span>
             </h1>

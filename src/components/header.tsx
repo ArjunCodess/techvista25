@@ -16,12 +16,14 @@ export default function Header() {
         </div>
         <nav className="flex items-center gap-3">
           <SignedOut>
-            <Link href="/sign-in">
-              <Button>Sign in</Button>
-            </Link>
-            <Link href="/sign-up">
-              <Button variant="secondary">Sign up</Button>
-            </Link>
+            <div className="flex gap-3">
+              <Link href="/sign-in">
+                <Button>Sign in</Button>
+              </Link>
+              <Link href="/sign-up" className="hidden sm:inline-block">
+                <Button variant="secondary">Sign up</Button>
+              </Link>
+            </div>
           </SignedOut>
           <SignedIn>
             <UserButton />

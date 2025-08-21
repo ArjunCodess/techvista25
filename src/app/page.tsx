@@ -186,7 +186,7 @@ export default function HomePage() {
               See It in Action
             </h2>
             <p className="text-lg text-neutral-600">
-              Here's what you'll find on your campus companion
+              Here's what you'll find on Campusly
             </p>
           </div>
 
@@ -214,7 +214,7 @@ export default function HomePage() {
             Ready to Transform Your Campus Experience?
           </h2>
           <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of students who are already using Campus Companion to
+            Join students who are already using Campusly to
             stay connected and informed. It's free, simple, and designed just
             for you.
           </p>
@@ -236,7 +236,7 @@ export default function HomePage() {
       <footer className="px-4 py-8 bg-neutral-900 text-neutral-400">
         <div className="mx-auto max-w-6xl text-center">
           <p className="text-sm">
-            © 2025 Campus Companion. Built with ❤️ for students, by students.
+            Campusly. Built with ❤️ for students, by students.
           </p>
           <p className="text-xs mt-2">
             Powered by Next.js, TypeScript, and Sanity CMS
