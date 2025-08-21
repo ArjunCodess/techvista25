@@ -22,6 +22,7 @@ import Post from "@/components/feed/post";
 import Poll from "@/components/feed/poll";
 import LostAndFound from "@/components/feed/laf";
 import Header from "@/components/header";
+import Link from "next/link";
 
 const samplePost = {
   _id: "sample-post",
@@ -186,7 +187,7 @@ export default function HomePage() {
               See It in Action
             </h2>
             <p className="text-lg text-neutral-600">
-              Here's what you'll find on Campusly
+              Here&apos;s what you&apos;ll find on Campusly
             </p>
           </div>
 
@@ -215,18 +216,18 @@ export default function HomePage() {
           </h2>
           <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
             Join students who are already using Campusly to
-            stay connected and informed. It's free, simple, and designed just
+            stay connected and informed. It&apos;s free, simple, and designed just
             for you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
-              <a href="/sign-in">
+              <Link href="/sign-in">
                 Get Started Now
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
+              </Link>
             </Button>
             <Button size="lg" asChild>
-              <a href="/feed">View Feed</a>
+              <Link href="/feed">View Feed</Link>
             </Button>
           </div>
         </div>
