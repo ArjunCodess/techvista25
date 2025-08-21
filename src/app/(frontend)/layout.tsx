@@ -1,6 +1,18 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/header";
+import { cn } from "@/lib/utils";
+import { Geist, Geist_Mono } from "next/font/google";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +27,9 @@ export default function FrontendLayout({
   return (
     <ClerkProvider>
       <Header />
-      <div className="mx-auto max-w-5xl w-full">
+      <div
+        className={cn(`${geistSans.variable} ${geistMono.variable} mx-auto max-w-5xl w-full antialiased`)}
+      >
         {children}
       </div>
     </ClerkProvider>
