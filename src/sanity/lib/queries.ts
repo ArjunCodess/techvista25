@@ -4,7 +4,7 @@ import { sanityFetch } from "./live";
 export type FeedKind = "posts" | "polls" | "lostandfound" | "feedback" | "all";
 
 export type ImageMedia = {
-  _key: string;
+  _key?: string;
   _type: "image";
   asset: {
     url: string;
@@ -41,6 +41,8 @@ export type LostAndFoundItem = {
   lost?: string;
   content?: string;
   found?: boolean;
+  phoneNumbers?: string[];
+  entries?: number;
   createdAt?: string;
   updatedAt?: string;
   tags?: string[];
@@ -100,6 +102,8 @@ export const LOST_AND_FOUND_QUERY = groq`*[_type == "lostAndFound"] | order(coal
   lost,
   content,
   found,
+  entries,
+  phoneNumbers,
   createdAt,
   updatedAt,
   tags,

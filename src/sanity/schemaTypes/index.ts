@@ -103,6 +103,20 @@ const lostAndFound: SchemaTypeDefinition = {
       type: 'boolean',
     },
     {
+      name: 'entries',
+      title: 'Entries',
+      type: 'number',
+      initialValue: 0,
+      description: 'Number of confirmations/updates for this item',
+    },
+    {
+      name: 'phoneNumbers',
+      title: 'Phone Numbers',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Contact numbers for communication about this item',
+    },
+    {
       name: 'createdAt',
       title: 'Created At',
       type: 'datetime',
