@@ -3,6 +3,7 @@
 import type { PollItem } from "@/sanity/lib/queries";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
 export default function Poll({ item }: { item: PollItem }) {
   const [options, setOptions] = useState(
@@ -14,7 +15,7 @@ export default function Poll({ item }: { item: PollItem }) {
   const cooldownTimerRef = useRef<number | null>(null);
 
   const storageVoteKey = useMemo(() => `poll_voted_${item._id}`, [item._id]);
-  const storageUserKey = "tv_uid";
+  const { isSignedIn } = useUser();
 
   useEffect(() => {
     try {
@@ -31,18 +32,6 @@ export default function Poll({ item }: { item: PollItem }) {
     [options]
   );
 
-  function getOrCreateUserId(): string {
-    try {
-      const existing = localStorage.getItem(storageUserKey);
-      if (existing) return existing;
-      const newId = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
-      localStorage.setItem(storageUserKey, newId);
-      return newId;
-    } catch {
-      return `${Date.now()}-${Math.random()}`;
-    }
-  }
-
   function startCooldown(seconds: number) {
     const until = Date.now() + seconds * 1000;
     setCooldownUntil(until);
@@ -56,15 +45,15 @@ export default function Poll({ item }: { item: PollItem }) {
   }
 
   async function handleVote(optionIndex: number) {
+    if (!isSignedIn) return;
     if (hasVoted || isSubmitting || cooldownUntil) return;
     setIsSubmitting(true);
     startCooldown(5);
-    const userId = getOrCreateUserId();
     try {
       const res = await fetch("/api/poll/vote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pollId: item._id, optionIndex, userId }),
+        body: JSON.stringify({ pollId: item._id, optionIndex }),
       });
       if (res.ok) {
         const data = await res.json();
@@ -78,7 +67,7 @@ export default function Poll({ item }: { item: PollItem }) {
     }
   }
 
-  const isDisabled = isSubmitting || Boolean(cooldownUntil) || hasVoted;
+  const isDisabled = !isSignedIn || isSubmitting || Boolean(cooldownUntil) || hasVoted;
 
   return (
     <Card className="gap-2">

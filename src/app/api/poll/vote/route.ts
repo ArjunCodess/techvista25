@@ -1,18 +1,23 @@
 import { NextRequest } from "next/server";
 import { writeClient } from "@/sanity/lib/client";
+import { auth } from "@clerk/nextjs/server";
 
 type VoteRequest = {
   pollId: string;
   optionIndex: number;
-  userId: string;
 };
 
 export async function POST(req: NextRequest) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return new Response(JSON.stringify({ error: "unauthorized" }), { status: 401 });
+    }
+    
     const body = (await req.json()) as VoteRequest;
-    const { pollId, optionIndex, userId } = body || {};
+    const { pollId, optionIndex } = body || {};
 
-    if (!pollId || typeof optionIndex !== "number" || optionIndex < 0 || !userId) {
+    if (!pollId || typeof optionIndex !== "number" || optionIndex < 0) {
       return new Response(JSON.stringify({ error: "invalid request" }), { status: 400 });
     }
 
