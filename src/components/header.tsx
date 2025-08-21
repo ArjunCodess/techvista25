@@ -19,7 +19,7 @@ export default function Header() {
             </Link>
           </SignedOut>
           <SignedIn>
-            <UserButton appearance={{ elements: { userButtonText: 'hidden' } }} />
+            <UserButton />
           </SignedIn>
         </nav>
       </div>
