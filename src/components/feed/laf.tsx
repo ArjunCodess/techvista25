@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useUser } from "@clerk/nextjs";
 
 export default function LostAndFound({
   item,
@@ -19,6 +20,8 @@ export default function LostAndFound({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const isMissing = !item.found;
+  const { isSignedIn } = useUser();
+  
   const viewHref = useMemo(
     () => `/feed?q=laf&id=${encodeURIComponent(item._id)}`,
     [item._id]
@@ -92,34 +95,43 @@ export default function LostAndFound({
         )}
 
         {focused && isMissing && (
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-            <Input
-              placeholder="Your phone number"
-              className="w-full border rounded px-3 py-2 text-sm"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-            <Button
-              disabled={isSubmitting}
-              onClick={async () => {
-                setIsSubmitting(true);
-                try {
-                  await fetch("/api/laf/found", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      lafId: item._id,
-                      phoneNumber: phoneNumber || undefined,
-                    }),
-                  });
-                } finally {
-                  setIsSubmitting(false);
-                }
-              }}
-              className={isSubmitting ? "opacity-75 cursor-not-allowed" : ""}
-            >
-              Add Contact Number
-            </Button>
+          <div className="space-y-3">
+            {!isSignedIn && (
+              <div className="text-sm text-muted-foreground text-center py-2 bg-muted/30 rounded-md">
+                Sign in to submit your contact number
+              </div>
+            )}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+              <Input
+                placeholder="Your phone number"
+                className="w-full border rounded px-3 py-2 text-sm"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                disabled={!isSignedIn}
+              />
+              <Button
+                disabled={isSubmitting || !isSignedIn}
+                onClick={async () => {
+                  if (!phoneNumber.trim()) return;
+                  setIsSubmitting(true);
+                  try {
+                    await fetch("/api/laf/found", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        lafId: item._id,
+                        phoneNumber: phoneNumber || undefined,
+                      }),
+                    });
+                  } finally {
+                    setIsSubmitting(false);
+                  }
+                }}
+                className={isSubmitting ? "opacity-75 cursor-not-allowed" : ""}
+              >
+                Add Contact Number
+              </Button>
+            </div>
           </div>
         )}
       </CardContent>

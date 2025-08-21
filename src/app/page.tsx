@@ -36,7 +36,7 @@ const samplePost = {
 
 const samplePoll = {
   _id: "sample-poll",
-  title: "What should be the theme for this year's farewell?",
+  title: "Theme for this year's farewell?",
   description:
     "Vote for your favorite theme and help us plan the perfect farewell celebration. Your voice matters!",
   createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(), // 1 hour ago

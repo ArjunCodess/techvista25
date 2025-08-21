@@ -18,7 +18,7 @@ export default function Poll({ item }: { item: PollItem }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
   const cooldownTimerRef = useRef<number | null>(null);
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
 
   const totalVotes = useMemo(
     () =>
@@ -89,7 +89,7 @@ export default function Poll({ item }: { item: PollItem }) {
   }
 
   const isDisabled =
-    isSubmitting || Boolean(cooldownUntil) || hasVoted;
+    !isSignedIn || isSubmitting || Boolean(cooldownUntil) || hasVoted;
 
   return (
     <Card className="gap-2">
@@ -130,6 +130,11 @@ export default function Poll({ item }: { item: PollItem }) {
         </div>
         {options.length > 0 && (
           <div className="space-y-2">
+            {!isSignedIn && (
+              <div className="text-sm text-muted-foreground text-center py-2 bg-muted/30 rounded-md">
+                Sign in to vote on this poll
+              </div>
+            )}
             {options.map((o, idx) => {
               const votes = o.votes ?? 0;
               const pct =
