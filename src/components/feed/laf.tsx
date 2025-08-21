@@ -1,5 +1,5 @@
 import { LostAndFoundItem } from "@/sanity/lib/queries";
-import { formatDateTime } from "@/lib/utils";
+import { formatDateTime, toTitleCase } from "@/lib/utils";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -38,17 +38,17 @@ export default function LostAndFound({ item }: { item: LostAndFoundItem }) {
         <div className="flex flex-wrap gap-2 w-full">
           {item.sections?.map((section, idx) => (
             <Badge key={`laf-section-${idx}`} variant="section" className="text-xs whitespace-nowrap">
-              {section}
+              {toTitleCase(section)}
             </Badge>
           ))}
           {item.classes?.map((klass, idx) => (
             <Badge key={`laf-class-${idx}`} variant="classes" className="text-xs whitespace-nowrap">
-              {klass}
+              {toTitleCase(klass)}
             </Badge>
           ))}
           {item.tags?.map((tag, idx) => (
             <Badge key={`laf-tag-${idx}`} variant="tags" className="text-xs whitespace-nowrap">
-              #{tag}
+              #{toTitleCase(tag)}
             </Badge>
           ))}
         </div>

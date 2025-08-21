@@ -5,7 +5,7 @@ import { useMemo, useRef, useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
-import { formatDateTime } from "@/lib/utils";
+import { formatDateTime, toTitleCase } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 import type { FeedbackItem } from "@/sanity/lib/queries";
 
@@ -95,17 +95,17 @@ export default function Feedback({ item }: { item: FeedbackItem }) {
         <div className="flex flex-wrap gap-2 w-full mb-3">
           {item.sections?.map((section, idx) => (
             <Badge key={`feedback-section-${idx}`} variant="section" className="text-xs whitespace-nowrap">
-              {section}
+              {toTitleCase(section)}
             </Badge>
           ))}
           {item.classes?.map((klass, idx) => (
             <Badge key={`feedback-class-${idx}`} variant="classes" className="text-xs whitespace-nowrap">
-              {klass}
+              {toTitleCase(klass)}
             </Badge>
           ))}
           {item.tags?.map((tag, idx) => (
             <Badge key={`feedback-tag-${idx}`} variant="tags" className="text-xs whitespace-nowrap">
-              #{tag}
+              #{toTitleCase(tag)}
             </Badge>
           ))}
         </div>
