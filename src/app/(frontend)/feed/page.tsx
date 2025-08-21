@@ -1,10 +1,7 @@
-import {
-  fetchLostAndFound,
-  fetchPolls,
-  fetchPosts,
-} from "@/sanity/lib/queries";
+import { fetchLostAndFound, fetchPolls, fetchPosts } from "@/sanity/lib/queries";
 import UnifiedGrid from "@/components/feed/unified-grid";
-import { mergeAndSortFeed } from "@/lib/utils";
+import { mergeAndSortFeed, type UnifiedFeedItem } from "@/lib/utils";
+import FeedFilter from "@/components/feed/feed-filter";
 
 function parseQ(searchParams: {
   [key: string]: string | string[] | undefined;
@@ -20,7 +17,7 @@ export default async function FeedPage({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const _q = parseQ(searchParams);
+  const q = parseQ(searchParams);
 
   const [posts, polls, laf] = await Promise.all([
     fetchPosts(),
@@ -28,9 +25,17 @@ export default async function FeedPage({
     fetchLostAndFound(),
   ]);
 
-  const items = mergeAndSortFeed(posts, polls, laf);
+  let items: UnifiedFeedItem[] = mergeAndSortFeed(posts, polls, laf);
+  if (q === "posts") items = items.filter((i) => i.kind === "post");
+  if (q === "polls") items = items.filter((i) => i.kind === "poll");
+  if (q === "lostandfound") items = items.filter((i) => i.kind === "lostandfound");
+
   return (
-    <section className="py-6">
+    <section className="py-6 space-y-4">
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-semibold">Feed</h1>
+        <FeedFilter />
+      </div>
       <UnifiedGrid items={items} />
     </section>
   );
