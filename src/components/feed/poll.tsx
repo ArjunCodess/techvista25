@@ -2,6 +2,7 @@
 
 import type { PollItem } from "@/sanity/lib/queries";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatDateTime } from "@/lib/utils";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 
@@ -96,6 +97,7 @@ export default function Poll({ item }: { item: PollItem }) {
         </CardHeader>
       )}
       <CardContent className={item.title ? "pt-0" : ""}>
+        <div className="text-xs text-muted-foreground mb-2">{formatDateTime(item.updatedAt || item.createdAt)}</div>
         {item.description && (
           <p className="text-sm text-muted-foreground mb-3">
             {item.description}

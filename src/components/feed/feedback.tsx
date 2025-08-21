@@ -5,13 +5,8 @@ import { useMemo, useRef, useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
-
-export type FeedbackItem = {
-  _id: string;
-  title?: string;
-  description?: string;
-  entries?: { content: string; userId?: string; createdAt?: string }[];
-};
+import { formatDateTime } from "@/lib/utils";
+import type { FeedbackItem } from "@/sanity/lib/queries";
 
 export default function Feedback({ item }: { item: FeedbackItem }) {
   const [text, setText] = useState("");
@@ -86,6 +81,7 @@ export default function Feedback({ item }: { item: FeedbackItem }) {
         </CardHeader>
       )}
       <CardContent className={item.title ? "pt-0" : ""}>
+        <div className="text-xs text-muted-foreground mb-2">{formatDateTime(item.updatedAt || item.createdAt)}</div>
         {item.description && (
           <p className="text-sm text-muted-foreground mb-3">
             {item.description}

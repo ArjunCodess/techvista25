@@ -1,4 +1,5 @@
 import { LostAndFoundItem } from "@/sanity/lib/queries";
+import { formatDateTime } from "@/lib/utils";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -25,6 +26,7 @@ export default function LostAndFound({ item }: { item: LostAndFoundItem }) {
           </Badge>
         </div>
       </CardHeader>
+      <div className="px-6 -mt-3 text-xs text-muted-foreground">{formatDateTime(item.updatedAt || item.createdAt)}</div>
       {item.content && (
         <CardContent className="pt-0">
           <p className="text-sm text-muted-foreground">{item.content}</p>

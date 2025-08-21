@@ -11,7 +11,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { toTitleCase } from "@/lib/utils";
+import { toTitleCase, formatDateTime } from "@/lib/utils";
+import Image from "next/image";
 
 function isImageMedia(m: ImageMedia | FileMedia): m is ImageMedia {
   return m._type === "image" && !!m.asset?.url;
@@ -34,6 +35,7 @@ export default function Post({ item }: { item: PostItem }) {
   return (
     <Card className="gap-2">
       <CardContent>
+        <div className="text-xs text-muted-foreground mb-2">{formatDateTime(item.updatedAt || item.createdAt)}</div>
         {item.content && (
           <p className="whitespace-pre-wrap mb-4">{item.content}</p>
         )}
@@ -45,11 +47,13 @@ export default function Post({ item }: { item: PostItem }) {
                 style={{ aspectRatio }}
                 className="relative w-full overflow-hidden rounded-md"
               >
-                <img
+                <Image
                   key={images[0]._key}
                   src={urlFor(images[0]).fit("max").url() || "/placeholder.svg"}
                   alt={images[0].alt || images[0].asset?.originalFilename || ""}
-                  className="absolute inset-0 h-full w-full object-scale-down"
+                  height={450}
+                  width={600}
+                  className="object-scale-down"
                 />
               </div>
             ) : (
@@ -61,10 +65,12 @@ export default function Post({ item }: { item: PostItem }) {
                   <CarouselContent className="h-full">
                     {images.map((m) => (
                       <CarouselItem key={m._key} className="h-full">
-                        <img
+                        <Image
                           src={urlFor(m).fit("max").url() || "/placeholder.svg"}
                           alt={m.alt || m.asset?.originalFilename || ""}
-                          className="h-full w-full object-scale-down"
+                          height={450}
+                          width={600}
+                          className="object-scale-down"
                         />
                       </CarouselItem>
                     ))}
