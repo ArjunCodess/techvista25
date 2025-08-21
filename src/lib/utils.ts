@@ -6,6 +6,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export function toTitleCase(input: string): string {
+  if (!input) return input
+  return input
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase())
+}
+
 export type UnifiedFeedItem =
   | { kind: "post"; date: string; item: PostItem }
   | { kind: "poll"; date: string; item: PollItem }

@@ -33,7 +33,6 @@ export type PostItem = {
   classes?: string[];
   createdAt?: string;
   updatedAt?: string;
-  organisationTitle?: string | null;
   filesMedia?: (ImageMedia | FileMedia)[];
 };
 
@@ -63,7 +62,6 @@ export const POSTS_QUERY = groq`*[_type == "post"] | order(coalesce(updatedAt, c
   classes,
   createdAt,
   updatedAt,
-  "organisationTitle": organisation->title,
   filesMedia[]{
     _key,
     _type,

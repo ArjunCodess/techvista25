@@ -25,20 +25,6 @@ const CLASS_OPTIONS = [
   'class 12',
 ] as const
 
-const organisation: SchemaTypeDefinition = {
-  name: 'organisation',
-  title: 'Organisation',
-  type: 'document',
-  fields: [
-    {
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    },
-  ],
-}
-
 const post: SchemaTypeDefinition = {
   name: 'post',
   title: 'Post',
@@ -75,12 +61,6 @@ const post: SchemaTypeDefinition = {
       type: 'array',
       of: [{ type: 'string' }],
       options: { list: Array.from(SECTION_OPTIONS) },
-    },
-    {
-      name: 'organisation',
-      title: 'Organisation',
-      type: 'reference',
-      to: [{ type: 'organisation' }],
     },
     {
       name: 'classes',
@@ -177,5 +157,5 @@ const poll: SchemaTypeDefinition = {
 }
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [organisation, post, lostAndFound, poll],
+  types: [post, lostAndFound, poll],
 }

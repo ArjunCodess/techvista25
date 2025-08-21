@@ -1,6 +1,6 @@
 import type { FileMedia, ImageMedia, PostItem } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
@@ -11,6 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { toTitleCase } from "@/lib/utils";
 
 function isImageMedia(m: ImageMedia | FileMedia): m is ImageMedia {
   return m._type === "image" && !!m.asset?.url;
@@ -32,13 +33,6 @@ export default function Post({ item }: { item: PostItem }) {
 
   return (
     <Card className="gap-2">
-      {item.organisationTitle && (
-        <CardHeader>
-          <div className="text-xs text-muted-foreground">
-            {item.organisationTitle}
-          </div>
-        </CardHeader>
-      )}
       <CardContent>
         {item.content && (
           <p className="whitespace-pre-wrap mb-3">{item.content}</p>
@@ -112,7 +106,7 @@ export default function Post({ item }: { item: PostItem }) {
             <div className="flex flex-wrap gap-1">
               {item.sections.map((section, idx) => (
                 <Badge key={idx} variant="section" className="text-xs">
-                  {section} Section
+                  {toTitleCase(section)} Section
                 </Badge>
               ))}
             </div>
@@ -122,7 +116,7 @@ export default function Post({ item }: { item: PostItem }) {
             <div className="flex flex-wrap gap-1">
               {item.classes.map((klass, idx) => (
                 <Badge key={idx} variant="classes" className="text-xs">
-                  {klass}
+                  {toTitleCase(klass)}
                 </Badge>
               ))}
             </div>
@@ -132,7 +126,7 @@ export default function Post({ item }: { item: PostItem }) {
             <div className="flex flex-wrap gap-1">
               {item.tags.map((tag, idx) => (
                 <Badge key={idx} variant="tags" className="text-xs">
-                  #{tag}
+                  #{toTitleCase(tag)}
                 </Badge>
               ))}
             </div>
