@@ -23,14 +23,12 @@ export default function Header() {
             </div>
           </SignedOut>
           <SignedIn>
-            <div className="flex gap-3">
-              <Button asChild>
-                <Link href="/feed" className="text-base hover:underline">
-                  Feed
-                </Link>
-              </Button>
-              <UserButton />
-            </div>
+            <Button asChild>
+              <Link href="/feed" className="text-base hover:underline">
+                Feed
+              </Link>
+            </Button>
+            <UserButton />
           </SignedIn>
         </nav>
       </div>
