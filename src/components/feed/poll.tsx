@@ -7,7 +7,9 @@ import { useUser } from "@clerk/nextjs";
 
 export default function Poll({ item }: { item: PollItem }) {
   const [options, setOptions] = useState(
-    () => item.options?.map((o) => ({ content: o.content, votes: o.votes ?? 0 })) || []
+    () =>
+      item.options?.map((o) => ({ content: o.content, votes: o.votes ?? 0 })) ||
+      []
   );
   const [hasVoted, setHasVoted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,23 +25,30 @@ export default function Poll({ item }: { item: PollItem }) {
       setHasVoted(voted);
     } catch {}
     return () => {
-      if (cooldownTimerRef.current) window.clearInterval(cooldownTimerRef.current);
+      if (cooldownTimerRef.current)
+        window.clearInterval(cooldownTimerRef.current);
     };
   }, [storageVoteKey]);
 
   const totalVotes = useMemo(
-    () => options.reduce((sum, o) => sum + (typeof o.votes === "number" ? o.votes : 0), 0),
+    () =>
+      options.reduce(
+        (sum, o) => sum + (typeof o.votes === "number" ? o.votes : 0),
+        0
+      ),
     [options]
   );
 
   function startCooldown(seconds: number) {
     const until = Date.now() + seconds * 1000;
     setCooldownUntil(until);
-    if (cooldownTimerRef.current) window.clearInterval(cooldownTimerRef.current);
+    if (cooldownTimerRef.current)
+      window.clearInterval(cooldownTimerRef.current);
     cooldownTimerRef.current = window.setInterval(() => {
       if (Date.now() >= until) {
         setCooldownUntil(null);
-        if (cooldownTimerRef.current) window.clearInterval(cooldownTimerRef.current);
+        if (cooldownTimerRef.current)
+          window.clearInterval(cooldownTimerRef.current);
       }
     }, 200);
   }
@@ -57,47 +66,64 @@ export default function Poll({ item }: { item: PollItem }) {
       });
       if (res.ok) {
         const data = await res.json();
-        const updated = data?.poll?.options as { content: string; votes?: number }[] | undefined;
-        if (Array.isArray(updated)) setOptions(updated.map((o) => ({ content: o.content, votes: o.votes ?? 0 })));
+        const updated = data?.poll?.options as
+          | { content: string; votes?: number }[]
+          | undefined;
+        if (Array.isArray(updated))
+          setOptions(
+            updated.map((o) => ({ content: o.content, votes: o.votes ?? 0 }))
+          );
         setHasVoted(true);
-        try { localStorage.setItem(storageVoteKey, "1"); } catch {}
+        try {
+          localStorage.setItem(storageVoteKey, "1");
+        } catch {}
       }
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  const isDisabled = !isSignedIn || isSubmitting || Boolean(cooldownUntil) || hasVoted;
+  const isDisabled =
+    !isSignedIn || isSubmitting || Boolean(cooldownUntil) || hasVoted;
 
   return (
     <Card className="gap-2">
       {item.title && (
         <CardHeader>
-          <CardTitle className="text-base font-medium">{item.title}</CardTitle>
+          <CardTitle className="text-base font-medium">
+            <span className="font-bold">Poll</span>: {item.title}
+          </CardTitle>
         </CardHeader>
       )}
       <CardContent className={item.title ? "pt-0" : ""}>
         {item.description && (
-          <p className="text-sm text-muted-foreground mb-3">{item.description}</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            {item.description}
+          </p>
         )}
         {options.length > 0 && (
           <div className="space-y-2">
             {options.map((o, idx) => {
               const votes = o.votes ?? 0;
-              const pct = totalVotes > 0 ? Math.round((votes / totalVotes) * 100) : 0;
+              const pct =
+                totalVotes > 0 ? Math.round((votes / totalVotes) * 100) : 0;
               return (
                 <button
                   key={idx}
                   disabled={isDisabled}
                   onClick={() => handleVote(idx)}
                   className={`w-full text-left border rounded-md px-3 py-2 transition-colors ${
-                    isDisabled ? "cursor-not-allowed opacity-80" : "hover:bg-muted"
+                    isDisabled
+                      ? "cursor-not-allowed opacity-80"
+                      : "hover:bg-muted"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-3">
                     <span className="text-sm">{o.content}</span>
                     {hasVoted && (
-                      <span className="text-xs text-muted-foreground whitespace-nowrap">{pct}% ({votes})</span>
+                      <span className="text-xs text-muted-foreground whitespace-nowrap">
+                        {pct}% ({votes})
+                      </span>
                     )}
                   </div>
                   {hasVoted && (

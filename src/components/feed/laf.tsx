@@ -7,7 +7,12 @@ export default function LostAndFound({ item }: { item: LostAndFoundItem }) {
     <Card className="gap-2">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <h3 className="font-medium">{item.lost || "Lost item"}</h3>
+          <h3 className="font-medium">
+            <span className="font-bold">
+              {item.found ? "Found" : "Missing"}
+            </span>
+            : {item.lost || "Lost item"}
+          </h3>
           <Badge
             variant={item.found ? "default" : "secondary"}
             className={
