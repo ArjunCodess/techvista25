@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header className="w-full border-b">
       <div className="mx-auto max-w-5xl h-15 px-4 flex items-center justify-between">
-        <Link href="/" className="font-semibold text-2xl">Connecto</Link>
+        <Link href="/" className="font-semibold text-2xl">Campusly</Link>
         <div className="flex-1 flex justify-center">
           <Link href="/feed" className="text-base hover:underline">
             Feed

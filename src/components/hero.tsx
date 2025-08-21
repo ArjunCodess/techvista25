@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Bell, BarChart3, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Hero() {
   const [featureNumber, setFeatureNumber] = useState(0);
@@ -47,16 +48,16 @@ export default function Hero() {
     <div className="w-full">
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
-          <div>
-            <Button variant="secondary" size="sm" className="gap-4">
-              🎓 Campus Life Simplified <ArrowRight className="w-4 h-4" />
-            </Button>
-          </div>
+          <Button variant="secondary" size="sm">
+            🎓 Campus Life Simplified
+          </Button>
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-3xl tracking-tighter text-center font-regular">
-              <span className="text-blue-600">Your Digital</span>
+              <span className="text-blue-600 text-6xl md:text-8xl">
+                Campusly
+              </span>
               <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
-                Campus Companion
+                Your Digital Campus Companion
               </span>
             </h1>
 
@@ -89,12 +90,16 @@ export default function Hero() {
           </motion.div>
 
           <div className="flex flex-row gap-3">
-            <Button size="lg" className="gap-4" variant="outline">
-              Learn More <ArrowRight className="w-4 h-4" />
-            </Button>
-            <Button size="lg" className="gap-4">
-              Explore Features <ArrowRight className="w-4 h-4" />
-            </Button>
+            <Link href="/sign-in">
+              <Button size="lg" className="gap-4" variant="outline">
+                Get Started <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+            <Link href="/feed">
+              <Button size="lg" className="gap-4">
+                Checkout Feed <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

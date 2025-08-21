@@ -80,7 +80,7 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Everything You Need, All in One Place
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto text-balance">
               Three powerful features designed to make your campus life easier
               and more engaging.
             </p>
