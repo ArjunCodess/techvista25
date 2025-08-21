@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatDateTime, toTitleCase } from "@/lib/utils";
 import { useEffect, useRef, useState, useMemo } from "react";
+import { useUser } from "@clerk/nextjs";
 
 export default function Poll({ item }: { item: PollItem }) {
   const [options, setOptions] = useState(
@@ -13,16 +14,11 @@ export default function Poll({ item }: { item: PollItem }) {
       []
   );
   const [hasVoted, setHasVoted] = useState(false);
+  const [userVoteIndex, setUserVoteIndex] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
   const cooldownTimerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (cooldownTimerRef.current)
-        window.clearInterval(cooldownTimerRef.current);
-    };
-  }, []);
+  const { user } = useUser();
 
   const totalVotes = useMemo(
     () =>
@@ -32,6 +28,24 @@ export default function Poll({ item }: { item: PollItem }) {
       ),
     [options]
   );
+
+  // Check if user has already voted
+  useEffect(() => {
+    if (user?.id && item.voters) {
+      const userVoted = item.voters.includes(user.id);
+      setHasVoted(userVoted);
+      
+      // Note: We can't determine which option the user voted for from the initial data
+      // This will be set when they vote or when we get the data from the API
+    }
+  }, [user?.id, item.voters]);
+
+  useEffect(() => {
+    return () => {
+      if (cooldownTimerRef.current)
+        window.clearInterval(cooldownTimerRef.current);
+    };
+  }, []);
 
   function startCooldown(seconds: number) {
     const until = Date.now() + seconds * 1000;
@@ -67,6 +81,7 @@ export default function Poll({ item }: { item: PollItem }) {
             updated.map((o) => ({ content: o.content, votes: o.votes ?? 0 }))
           );
         setHasVoted(true);
+        setUserVoteIndex(data?.poll?.userVote ?? optionIndex);
       }
     } finally {
       setIsSubmitting(false);
@@ -119,6 +134,7 @@ export default function Poll({ item }: { item: PollItem }) {
               const votes = o.votes ?? 0;
               const pct =
                 totalVotes > 0 ? Math.round((votes / totalVotes) * 100) : 0;
+              const isUserVote = hasVoted && userVoteIndex === idx;
               return (
                 <button
                   key={idx}
@@ -128,10 +144,17 @@ export default function Poll({ item }: { item: PollItem }) {
                     isDisabled
                       ? "cursor-not-allowed opacity-80"
                       : "hover:bg-muted"
-                  }`}
+                  } ${isUserVote ? "ring-2 ring-primary bg-primary/5" : ""}`}
                 >
                   <div className="flex items-center justify-between gap-3">
-                    <span className="text-sm">{o.content}</span>
+                    <span className="text-sm flex items-center gap-2">
+                      {o.content}
+                      {isUserVote && (
+                        <span className="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded">
+                          Your vote
+                        </span>
+                      )}
+                    </span>
                     {hasVoted && (
                       <span className="text-xs text-muted-foreground whitespace-nowrap">
                         {pct}% ({votes})

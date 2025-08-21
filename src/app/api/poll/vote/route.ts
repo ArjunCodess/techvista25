@@ -54,8 +54,8 @@ export async function POST(req: NextRequest) {
     await writeClient.patch(pollId).setIfMissing({ voters: [] }).set(patch).commit({ autoGenerateArrayKeys: true });
 
     const updated = await writeClient.fetch(
-      `*[_id == $id][0]{ _id, options[]{ content, votes }, voters }`,
-      { id: pollId }
+      `*[_id == $id][0]{ _id, options[]{ content, votes }, voters, userVote: $optionIndex }`,
+      { id: pollId, optionIndex }
     );
 
     return new Response(JSON.stringify({ ok: true, poll: updated }), { status: 200 });

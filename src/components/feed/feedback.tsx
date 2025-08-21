@@ -14,16 +14,25 @@ export default function Feedback({ item }: { item: FeedbackItem }) {
   const [submitting, setSubmitting] = useState(false);
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [userFeedback, setUserFeedback] = useState<string>("");
   const cooldownTimerRef = useRef<number | null>(null);
 
-  const { isSignedIn } = useUser();
+  const { user, isSignedIn } = useUser();
 
   useEffect(() => {
+    // Check if user has already submitted feedback
+    if (user?.id && item.entries) {
+      const userEntry = item.entries.find(entry => entry.userId === user.id);
+      if (userEntry) {
+        setHasSubmitted(true);
+        setUserFeedback(userEntry.content);
+      }
+    }
     return () => {
       if (cooldownTimerRef.current)
         window.clearInterval(cooldownTimerRef.current);
     };
-  }, []);
+  }, [user?.id, item.entries]);
 
   function startCooldown(seconds: number) {
     const until = Date.now() + seconds * 1000;
@@ -51,7 +60,9 @@ export default function Feedback({ item }: { item: FeedbackItem }) {
         body: JSON.stringify({ feedbackId: item._id, content: text.trim() }),
       });
       if (res.ok) {
+        const data = await res.json();
         setHasSubmitted(true);
+        setUserFeedback(data?.feedback?.userFeedback ?? text.trim());
         setText("");
       }
     } finally {
@@ -100,8 +111,14 @@ export default function Feedback({ item }: { item: FeedbackItem }) {
           ))}
         </div>
         {hasSubmitted ? (
-          <div className="pt-6 pb-4 flex items-center justify-center">
-            <span className="text-sm font-medium">Submitted</span>
+          <div className="space-y-3">
+            <div className="pt-4 pb-2">
+              <span className="text-sm font-medium text-green-600">✓ Feedback submitted</span>
+            </div>
+            <div className="bg-muted/50 rounded-md p-3">
+              <p className="text-sm text-muted-foreground mb-2">Your feedback:</p>
+              <p className="text-sm">{userFeedback}</p>
+            </div>
           </div>
         ) : (
           <div className="space-y-2">

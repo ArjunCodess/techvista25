@@ -56,6 +56,7 @@ export type PollItem = {
   title?: string;
   description?: string;
   options?: PollOption[];
+  voters?: string[];
   createdAt: string;
   updatedAt?: string;
   tags?: string[];
@@ -104,6 +105,7 @@ export const LOST_AND_FOUND_QUERY = groq`*[_type == "lostAndFound"] | order(coal
   found,
   entries,
   phoneNumbers,
+  userSubmissions,
   createdAt,
   updatedAt,
   tags,
@@ -116,6 +118,7 @@ export const POLLS_QUERY = groq`*[_type == "poll"] | order(coalesce(updatedAt, c
   title,
   description,
   options[]{content, votes},
+  voters,
   createdAt,
   updatedAt,
   tags,

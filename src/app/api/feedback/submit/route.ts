@@ -44,8 +44,8 @@ export async function POST(req: NextRequest) {
       .commit({ autoGenerateArrayKeys: true });
 
     const updated = await writeClient.fetch(
-      `*[_id == $id][0]{ _id, title, description, entries[]{ content, userId, createdAt } }`,
-      { id: feedbackId }
+      `*[_id == $id][0]{ _id, title, description, entries[]{ content, userId, createdAt }, userFeedback: $content }`,
+      { id: feedbackId, content: content.trim() }
     );
 
     return new Response(JSON.stringify({ ok: true, feedback: updated }), { status: 200 });
