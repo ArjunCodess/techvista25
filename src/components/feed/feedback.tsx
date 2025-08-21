@@ -110,7 +110,7 @@ export default function Feedback({ item }: { item: FeedbackItem }) {
           ))}
         </div>
         {hasSubmitted ? (
-          <div className="py-2 flex items-center justify-center">
+          <div className="pt-6 pb-4 flex items-center justify-center">
             <span className="text-sm font-medium">Submitted</span>
           </div>
         ) : (

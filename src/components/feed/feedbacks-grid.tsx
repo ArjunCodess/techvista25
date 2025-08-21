@@ -1,4 +1,5 @@
-import Feedback, { FeedbackItem } from "./feedback";
+import { FeedbackItem } from "@/sanity/lib/queries";
+import Feedback from "./feedback";
 
 export default function FeedbacksGrid({ items }: { items: FeedbackItem[] }) {
   return (
