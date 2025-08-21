@@ -1,7 +1,7 @@
 import { groq } from "next-sanity";
 import { sanityFetch } from "./live";
 
-export type FeedKind = "posts" | "polls" | "lostandfound" | "all";
+export type FeedKind = "posts" | "polls" | "lostandfound" | "feedback" | "all";
 
 export type ImageMedia = {
   _key: string;
@@ -54,6 +54,15 @@ export type PollItem = {
   createdAt: string;
 };
 
+export type FeedbackEntry = { content: string; userId?: string; createdAt?: string };
+export type FeedbackItem = {
+  _id: string;
+  title?: string;
+  description?: string;
+  entries?: FeedbackEntry[];
+  createdAt: string;
+};
+
 export const POSTS_QUERY = groq`*[_type == "post"] | order(coalesce(updatedAt, createdAt, _createdAt) desc) {
   _id,
   content,
@@ -92,6 +101,14 @@ export const POLLS_QUERY = groq`*[_type == "poll"] | order(_createdAt desc) {
   "createdAt": _createdAt
 }`;
 
+export const FEEDBACKS_QUERY = groq`*[_type == "feedback"] | order(_createdAt desc) {
+  _id,
+  title,
+  description,
+  entries[]{ content, userId, createdAt },
+  "createdAt": _createdAt
+}`;
+
 export async function fetchPosts() {
   const result = await sanityFetch({ query: POSTS_QUERY });
   return result.data as PostItem[];
@@ -105,4 +122,9 @@ export async function fetchLostAndFound() {
 export async function fetchPolls() {
   const result = await sanityFetch({ query: POLLS_QUERY });
   return result.data as PollItem[];
+}
+
+export async function fetchFeedbacks() {
+  const result = await sanityFetch({ query: FEEDBACKS_QUERY });
+  return result.data as FeedbackItem[];
 }

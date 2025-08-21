@@ -170,6 +170,41 @@ const poll: SchemaTypeDefinition = {
   ],
 }
 
+const feedback: SchemaTypeDefinition = {
+  name: 'feedback',
+  title: 'Feedback',
+  type: 'document',
+  fields: [
+    { name: 'title', title: 'Title', type: 'string' },
+    { name: 'description', title: 'Description', type: 'text' },
+    {
+      name: 'entries',
+      title: 'Entries',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'content',
+              title: 'Content',
+              type: 'text',
+              validation: (Rule) => Rule.required(),
+            },
+            { name: 'userId', title: 'User ID', type: 'string' },
+            {
+              name: 'createdAt',
+              title: 'Created At',
+              type: 'datetime',
+              initialValue: () => new Date().toISOString(),
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [post, lostAndFound, poll],
+  types: [post, lostAndFound, poll, feedback],
 }
