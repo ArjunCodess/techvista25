@@ -1,0 +1,127 @@
+"use client";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useMemo, useRef, useState, useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
+import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
+
+export type FeedbackItem = {
+  _id: string;
+  title?: string;
+  description?: string;
+  entries?: { content: string; userId?: string; createdAt?: string }[];
+};
+
+export default function Feedback({ item }: { item: FeedbackItem }) {
+  const [text, setText] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const cooldownTimerRef = useRef<number | null>(null);
+
+  const storageKey = useMemo(
+    () => `feedback_submitted_${item._id}`,
+    [item._id]
+  );
+  const { isSignedIn } = useUser();
+
+  useEffect(() => {
+    try {
+      setHasSubmitted(localStorage.getItem(storageKey) === "1");
+    } catch {}
+    return () => {
+      if (cooldownTimerRef.current)
+        window.clearInterval(cooldownTimerRef.current);
+    };
+  }, [storageKey]);
+
+  function startCooldown(seconds: number) {
+    const until = Date.now() + seconds * 1000;
+    setCooldownUntil(until);
+    if (cooldownTimerRef.current)
+      window.clearInterval(cooldownTimerRef.current);
+    cooldownTimerRef.current = window.setInterval(() => {
+      if (Date.now() >= until) {
+        setCooldownUntil(null);
+        if (cooldownTimerRef.current)
+          window.clearInterval(cooldownTimerRef.current);
+      }
+    }, 200);
+  }
+
+  async function handleSubmit() {
+    if (!isSignedIn || submitting || cooldownUntil || hasSubmitted) return;
+    if (!text.trim()) return;
+    setSubmitting(true);
+    startCooldown(5);
+    try {
+      const res = await fetch("/api/feedback/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ feedbackId: item._id, content: text.trim() }),
+      });
+      if (res.ok) {
+        setHasSubmitted(true);
+        setText("");
+        try {
+          localStorage.setItem(storageKey, "1");
+        } catch {}
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  const isDisabled =
+    !isSignedIn || submitting || Boolean(cooldownUntil) || hasSubmitted;
+
+  return (
+    <Card className="gap-2">
+      {item.title && (
+        <CardHeader>
+          <CardTitle className="text-base font-medium">
+            <span className="font-bold">Feedback</span>: {item.title}
+          </CardTitle>
+        </CardHeader>
+      )}
+      <CardContent className={item.title ? "pt-0" : ""}>
+        {item.description && (
+          <p className="text-sm text-muted-foreground mb-3">
+            {item.description}
+          </p>
+        )}
+        {hasSubmitted ? (
+          <div className="py-2 flex items-center justify-center">
+            <span className="text-sm font-medium">Submitted</span>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            <Textarea
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="write your feedback..."
+              disabled={isDisabled}
+              className={`w-full min-h-24 border rounded-md px-3 py-2 text-sm ${
+                isDisabled ? "opacity-80" : ""
+              }`}
+            />
+            <div className="flex items-center justify-end">
+              <Button
+                onClick={handleSubmit}
+                disabled={isDisabled || !text.trim()}
+                className={`border rounded-md px-3 py-1.5 text-sm ${
+                  isDisabled || !text.trim()
+                    ? "cursor-not-allowed opacity-80"
+                    : "hover:bg-muted"
+                }`}
+              >
+                Submit
+              </Button>
+            </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}

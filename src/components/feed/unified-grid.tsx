@@ -1,6 +1,7 @@
 import { UnifiedFeedItem } from "@/lib/utils";
 import Post from "./post";
 import Poll from "./poll";
+import Feedback from "./feedback";
 import LostAndFound from "./laf";
 
 export default function UnifiedGrid({ items }: { items: UnifiedFeedItem[] }) {
@@ -10,6 +11,7 @@ export default function UnifiedGrid({ items }: { items: UnifiedFeedItem[] }) {
         <div key={idx} className="overflow-hidden">
           {u.kind === "post" && <Post item={u.item} />}
           {u.kind === "poll" && <Poll item={u.item} />}
+          {u.kind === "feedback" && <Feedback item={u.item} />}
           {u.kind === "lostandfound" && <LostAndFound item={u.item} />}
         </div>
       ))}
