@@ -15,9 +15,9 @@ function parseQ(searchParams: {
 export default async function FeedPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const q = parseQ(searchParams);
+  const q = parseQ(await searchParams);
 
   const [posts, polls, feedbacks, laf] = await Promise.all([
     fetchPosts(),
