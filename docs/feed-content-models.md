@@ -9,7 +9,8 @@ Used for announcements, events, exam notices, or club activities.
 - `content` — text (main body of post)
 - `tags` — array of strings (multiple tags)
 - `organisation` — reference → `organisation` (one, reusable)
-- `classes` — array of strings (multiple class/year/section references)
+- `sections` — array of strings (choose from: senior, junior, primary, pre-primary)
+- `classes` — array of strings (defaults to all; choose from: montessori, nursery, kindergarten, class 1–12)
 - `filesMedia` — array of file uploads (optional)
   - **If image** → render normally in feed
   - **If video** → show preview thumbnail, play on click

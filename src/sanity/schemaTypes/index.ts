@@ -1,5 +1,30 @@
 import { type SchemaTypeDefinition } from 'sanity'
 
+const SECTION_OPTIONS = [
+  'senior',
+  'junior',
+  'primary',
+  'pre-primary',
+] as const
+
+const CLASS_OPTIONS = [
+  'montessori',
+  'nursery',
+  'kindergarten',
+  'class 1',
+  'class 2',
+  'class 3',
+  'class 4',
+  'class 5',
+  'class 6',
+  'class 7',
+  'class 8',
+  'class 9',
+  'class 10',
+  'class 11',
+  'class 12',
+] as const
+
 const organisation: SchemaTypeDefinition = {
   name: 'organisation',
   title: 'Organisation',
@@ -20,6 +45,11 @@ const post: SchemaTypeDefinition = {
   type: 'document',
   fields: [
     {
+      name: 'content',
+      title: 'Content',
+      type: 'text',
+    },
+    {
       name: 'createdAt',
       title: 'Created At',
       type: 'datetime',
@@ -34,15 +64,17 @@ const post: SchemaTypeDefinition = {
       initialValue: () => new Date().toISOString(),
     },
     {
-      name: 'content',
-      title: 'Content',
-      type: 'text',
-    },
-    {
       name: 'tags',
       title: 'Tags',
       type: 'array',
       of: [{ type: 'string' }],
+    },
+    {
+      name: 'sections',
+      title: 'Sections',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: { list: Array.from(SECTION_OPTIONS) },
     },
     {
       name: 'organisation',
@@ -55,6 +87,8 @@ const post: SchemaTypeDefinition = {
       title: 'Classes',
       type: 'array',
       of: [{ type: 'string' }],
+      options: { list: Array.from(CLASS_OPTIONS) },
+      initialValue: () => Array.from(CLASS_OPTIONS),
     },
     {
       name: 'filesMedia',
