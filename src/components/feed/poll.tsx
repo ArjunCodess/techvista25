@@ -3,9 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Poll({ item }: { item: PollItem }) {
   return (
-    <Card>
+    <Card className="gap-2">
       {item.title && (
-        <CardHeader className="pb-3">
+        <CardHeader>
           <CardTitle className="text-base font-medium">{item.title}</CardTitle>
         </CardHeader>
       )}

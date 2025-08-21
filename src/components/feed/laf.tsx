@@ -4,8 +4,8 @@ import { Badge } from "@/components/ui/badge";
 
 export default function LostAndFound({ item }: { item: LostAndFoundItem }) {
   return (
-    <Card>
-      <CardHeader className="pb-3">
+    <Card className="gap-2">
+      <CardHeader>
         <div className="flex items-center justify-between">
           <h3 className="font-medium">{item.lost || "Lost item"}</h3>
           <Badge
