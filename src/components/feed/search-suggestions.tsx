@@ -224,7 +224,7 @@ export default function SearchSuggestions({
       )}
       
       <div className="text-xs text-muted-foreground pt-2 border-t">
-        💡 Tip: Use quotes for exact phrases, e.g., "tech fest 2024"
+        💡 Tip: Use quotes for exact phrases, e.g., &quot;tech fest 2024&quot;
       </div>
     </div>
   )

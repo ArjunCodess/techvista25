@@ -3,7 +3,6 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Search, X, Command } from "lucide-react"
 import { cn } from "@/lib/utils"
 import SearchSuggestions from "./search-suggestions"
 import SearchInput from "./search-input"
@@ -16,7 +15,6 @@ export default function FeedSearch() {
   
   const [searchValue, setSearchValue] = useState(searchParams.get("search") || "")
   const [isExpanded, setIsExpanded] = useState(!!searchParams.get("search"))
-  const [isFocused, setIsFocused] = useState(false)
   const [showSuggestions, setShowSuggestions] = useState(false)
 
   const handleSearch = useCallback((value: string) => {
@@ -62,30 +60,6 @@ export default function FeedSearch() {
     e.preventDefault()
     handleSearch(searchValue)
   }, [searchValue, handleSearch])
-
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
-      handleClear()
-    }
-  }, [handleClear])
-
-  const handleFocus = useCallback(() => {
-    setIsFocused(true)
-    if (searchValue) {
-      setIsExpanded(true)
-    }
-    setShowSuggestions(true)
-  }, [searchValue])
-
-  const handleBlur = useCallback(() => {
-    setIsFocused(false)
-    // Keep expanded if there's a search value
-    if (!searchValue) {
-      setIsExpanded(false)
-    }
-    // Delay hiding suggestions to allow clicking on them
-    setTimeout(() => setShowSuggestions(false), 200)
-  }, [searchValue])
 
   const handleSuggestionClick = useCallback((suggestion: string) => {
     setSearchValue(suggestion)
@@ -145,7 +119,7 @@ export default function FeedSearch() {
       
       {hasSearchQuery && (
         <div className="absolute top-full left-0 mt-2 text-sm text-muted-foreground">
-          Searching for: "{searchParams.get("search")}"
+          Searching for: &quot;{searchParams.get("search")}&quot;
         </div>
       )}
     </div>

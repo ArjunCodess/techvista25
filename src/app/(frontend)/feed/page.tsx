@@ -72,7 +72,7 @@ export default async function FeedPage({
             <div className="flex items-center gap-3">
               <div>
                 <div className="font-medium">
-                  Search results for "{search}"
+                  Search results for &quot;{search}&quot;
                 </div>
                 <div className="text-sm text-muted-foreground">
                   {items.length > 0 ? `${items.length} item${items.length !== 1 ? 's' : ''} found` : 'No results found'}
@@ -114,7 +114,7 @@ export default async function FeedPage({
             <div className="text-center py-8">
               <div className="text-lg font-medium mb-2">No items found</div>
               <div className="text-muted-foreground mb-4">
-                No items match your search for "{search}"
+                No items match your search for &quot;{search}&quot;
               </div>
               <div className="text-sm text-muted-foreground">
                 Try adjusting your search terms or browse all items

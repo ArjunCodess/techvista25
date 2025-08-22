@@ -1,7 +1,6 @@
 "use client"
 
 import { useMemo } from "react"
-import { useSearchParams } from "next/navigation"
 import { Badge } from "@/components/ui/badge"
 import { Search, Filter, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -27,7 +26,20 @@ export default function SearchResultsSummary({
     }
     
     items.forEach(item => {
-      counts[item.kind]++
+      switch (item.kind) {
+        case 'post':
+          counts.posts++
+          break
+        case 'poll':
+          counts.polls++
+          break
+        case 'feedback':
+          counts.feedback++
+          break
+        case 'lostandfound':
+          counts.lostandfound++
+          break
+      }
     })
     
     return counts
@@ -46,7 +58,7 @@ export default function SearchResultsSummary({
           <Search className="h-5 w-5 text-muted-foreground" />
           <div>
             <div className="font-medium">
-              Search results for "{searchQuery}"
+              Search results for &quot;{searchQuery}&quot;
             </div>
             <div className="text-sm text-muted-foreground">
               {hasResults ? `${totalResults} item${totalResults !== 1 ? 's' : ''} found` : 'No results found'}
@@ -99,7 +111,7 @@ export default function SearchResultsSummary({
           <Search className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
           <div className="text-lg font-medium mb-2">No items found</div>
           <div className="text-muted-foreground mb-4">
-            No items match your search for "{searchQuery}"
+            No items match your search for &quot;{searchQuery}&quot;
           </div>
           <div className="text-sm text-muted-foreground">
             Try adjusting your search terms or browse all items

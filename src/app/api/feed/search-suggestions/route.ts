@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { fetchPosts, fetchPolls, fetchFeedbacks, fetchLostAndFound } from '@/sanity/lib/queries'
+import type { PostItem, PollItem, FeedbackItem, LostAndFoundItem } from '@/sanity/lib/queries'
 
 export async function GET() {
   try {
@@ -17,7 +18,7 @@ export async function GET() {
     const allClasses = new Set<string>()
 
     // Process posts
-    posts.forEach((post: any) => {
+    posts.forEach((post: PostItem) => {
       if (post.tags) {
         post.tags.forEach((tag: string) => {
           tagFrequency.set(tag, (tagFrequency.get(tag) || 0) + 1)
@@ -28,7 +29,7 @@ export async function GET() {
     })
 
     // Process polls
-    polls.forEach((poll: any) => {
+    polls.forEach((poll: PollItem) => {
       if (poll.tags) {
         poll.tags.forEach((tag: string) => {
           tagFrequency.set(tag, (tagFrequency.get(tag) || 0) + 1)
@@ -39,7 +40,7 @@ export async function GET() {
     })
 
     // Process feedbacks
-    feedbacks.forEach((feedback: any) => {
+    feedbacks.forEach((feedback: FeedbackItem) => {
       if (feedback.tags) {
         feedback.tags.forEach((tag: string) => {
           tagFrequency.set(tag, (tagFrequency.get(tag) || 0) + 1)
@@ -50,7 +51,7 @@ export async function GET() {
     })
 
     // Process lost and found
-    laf.forEach((item: any) => {
+    laf.forEach((item: LostAndFoundItem) => {
       if (item.tags) {
         item.tags.forEach((tag: string) => {
           tagFrequency.set(tag, (tagFrequency.get(tag) || 0) + 1)

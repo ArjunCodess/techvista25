@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useCallback, useMemo, useRef, useEffect } from "react"
+import { useState, useMemo, useRef, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search, X, Command, Loader2 } from "lucide-react"
+import { Search, X, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 

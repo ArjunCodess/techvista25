@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Badge } from "@/components/ui/badge"
-import { TrendingUp, Search, Clock, BarChart3 } from "lucide-react"
+import { TrendingUp, Search, Clock } from "lucide-react"
 
 interface SearchAnalyticsProps {
   className?: string
@@ -36,10 +36,10 @@ export default function SearchAnalytics({ className = "" }: SearchAnalyticsProps
             
             // Remove duplicates and sort by count
             const uniqueTrends = trends
-              .filter((trend, index, self) => 
-                index === self.findIndex(t => t.query === trend.query)
+              .filter((trend: SearchTrend, index: number, self: SearchTrend[]) => 
+                index === self.findIndex((t: SearchTrend) => t.query === trend.query)
               )
-              .sort((a, b) => b.count - a.count)
+              .sort((a: SearchTrend, b: SearchTrend) => b.count - a.count)
               .slice(0, 5)
             
             setSearchTrends(uniqueTrends)
@@ -80,7 +80,7 @@ export default function SearchAnalytics({ className = "" }: SearchAnalyticsProps
       </div>
       
       <div className="space-y-2">
-        {searchTrends.map((trend, index) => (
+        {searchTrends.map((trend) => (
           <div key={trend.query} className="flex items-center justify-between p-2 bg-muted/30 rounded-lg">
             <div className="flex items-center gap-2">
               <Search className="h-3 w-3 text-muted-foreground" />
