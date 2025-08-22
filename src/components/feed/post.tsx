@@ -35,7 +35,9 @@ export default function Post({ item }: { item: PostItem }) {
   return (
     <Card className="gap-2">
       <CardContent>
-        <div className="text-xs text-muted-foreground mb-2">{formatDateTime(item.createdAt)}</div>
+        <div className="text-xs text-muted-foreground mb-2">
+          {formatDateTime(item.createdAt)}
+        </div>
         {item.content && (
           <p className="whitespace-pre-wrap mb-4">{item.content}</p>
         )}
@@ -48,6 +50,7 @@ export default function Post({ item }: { item: PostItem }) {
                 className="relative w-full overflow-hidden rounded-md"
               >
                 <Image
+                  priority={true}
                   key={images[0]._key}
                   src={urlFor(images[0]).fit("max").url() || "/placeholder.svg"}
                   alt={images[0].alt || images[0].asset?.originalFilename || ""}
@@ -66,6 +69,7 @@ export default function Post({ item }: { item: PostItem }) {
                     {images.map((m) => (
                       <CarouselItem key={m._key} className="h-full">
                         <Image
+                          priority={true}
                           src={urlFor(m).fit("max").url() || "/placeholder.svg"}
                           alt={m.alt || m.asset?.originalFilename || ""}
                           height={450}
