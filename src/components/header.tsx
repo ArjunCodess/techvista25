@@ -12,6 +12,9 @@ export default function Header() {
           Campusly
         </Link>
         <nav className="flex items-center gap-3">
+          <Link href="/map" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Map
+          </Link>
           <SignedOut>
             <div className="flex gap-3">
               <Link href="/sign-in">
