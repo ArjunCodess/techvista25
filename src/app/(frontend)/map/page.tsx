@@ -4,7 +4,7 @@ export default function MapPage() {
   return (
     <section className="py-6 space-y-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold mb-2">Campus Map</h1>
+        <h1 className="text-3xl font-bold mb-2">CMS Kanpur Road: Campus Map</h1>
         <p className="text-muted-foreground">
           Explore our campus layout and facilities
         </p>
