@@ -67,3 +67,48 @@ export function mergeAndSortFeed(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 }
+
+export function searchFeedItems(items: UnifiedFeedItem[], searchQuery: string): UnifiedFeedItem[] {
+  if (!searchQuery.trim()) return items
+  
+  const query = searchQuery.toLowerCase().trim()
+  
+  return items.filter(item => {
+    const searchableFields: string[] = []
+    
+    if (item.item.tags) searchableFields.push(...item.item.tags)
+    if (item.item.sections) searchableFields.push(...item.item.sections)
+    if (item.item.classes) searchableFields.push(...item.item.classes)
+    
+    switch (item.kind) {
+      case "post":
+        if (item.item.content) searchableFields.push(item.item.content)
+        break
+      case "poll":
+        if (item.item.title) searchableFields.push(item.item.title)
+        if (item.item.description) searchableFields.push(item.item.description)
+        break
+      case "feedback":
+        if (item.item.title) searchableFields.push(item.item.title)
+        if (item.item.description) searchableFields.push(item.item.description)
+        break
+      case "lostandfound":
+        if (item.item.lost) searchableFields.push(item.item.lost)
+        if (item.item.content) searchableFields.push(item.item.content)
+        break
+    }
+    
+    return searchableFields.some(field => 
+      field.toLowerCase().includes(query)
+    )
+  })
+}
+
+export function highlightSearchTerms(text: string, searchQuery: string): string {
+  if (!searchQuery.trim() || !text) return text
+  
+  const query = searchQuery.trim()
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
+  
+  return text.replace(regex, '<mark class="bg-yellow-200 dark:bg-yellow-800 px-1 rounded">$1</mark>')
+}
